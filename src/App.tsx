@@ -9,19 +9,21 @@ interface Todo{
 const App = () => {
   const [todo,setTodo]=useState<null | Todo> (null)
   const [error, setError] = useState<null | string>(null)
+
   useEffect(()=>{
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
+    fetch('https://jsonplaceholder.typicode.com/todo/1')
       .then(response=>{
         if (response.ok) return response.json()
-        setError("Hubo un error al cargar los datos")
+        throw new Error("Error 404: la página no existe")
       })
       .then((data:Todo)=>{
         console.log(data)
         setTodo(data)
       })
-      .catch(error=>console.log(error)
-       )
-      
+      .catch((error:unknown)=>{
+        if(error instanceof Error) setError(error.message)
+        else setError("Error al cargar los datos")
+      })
   },[])
 
   if (error) return <p className="text-center text-danger">{error}</p>
