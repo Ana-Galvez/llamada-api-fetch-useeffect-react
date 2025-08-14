@@ -7,7 +7,7 @@ interface Todo{
   completed:boolean;
 }
 const App = () => {
-  const [todo,setTodo]=useState<Todo | null> (null)
+  const [todo,setTodo]=useState<null | Todo> (null)
   useEffect(()=>{
     fetch('https://jsonplaceholder.typicode.com/todos/1')
       .then(response=>response.json())
@@ -17,10 +17,12 @@ const App = () => {
       })
       .catch(error=>console.log(error))
   },[])
+
+  if (!todo) return <p>Cargando datos....</p>
   return (
     <div className="container mx-auto">
       <h1>Obtención de API con fetch</h1>
-      <h2>{todo?.title}</h2>
+      <h2>{todo.title}</h2>
     </div>
   )
 }
