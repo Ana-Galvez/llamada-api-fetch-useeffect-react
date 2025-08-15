@@ -11,7 +11,7 @@ const App = () => {
   const [error, setError] = useState<null | string>(null)
 
   useEffect(()=>{
-    fetch('https://jsonplaceholder.typicode.com/todo/1')
+    fetch('https://jsonplaceholder.typicode.com/todos/201') //todos/hasta200 correcto
       .then(response=>{
         if (response.ok) return response.json()
         throw new Error("Error 404: la página no existe")
@@ -26,7 +26,7 @@ const App = () => {
       })
   },[])
 
-  if (error) return <p className="text-center text-danger">{error}</p>
+  if (error) return <p className="text-center text-danger mt-5 fs-1 fw-bolder">{error}</p>
   if (!todo) return <p className="text-center">Cargando datos....</p>
 
   return (
